@@ -69,7 +69,7 @@ class ParkingRequest(BaseModel):
 
 
 class ParkingDecision(BaseModel):
-    """Output of the deterministic rule engine."""
+    """Output of the rule engine / AI agent."""
     can_park: Optional[bool] = None          # None = insufficient information to decide
     confidence: Literal["high", "medium", "low"] = "low"
     remaining_time: Optional[str] = None     # human-readable Hebrew duration string
@@ -77,3 +77,9 @@ class ParkingDecision(BaseModel):
     geo_context: Optional[GeoContext] = None
     parsed_sign: Optional[ParsedParkingSign] = None
     warnings: List[str] = Field(default_factory=list)
+    # AI-enhanced fields
+    side: Optional[str] = None               # "right" | "left" | "both" | None
+    payment_required: Optional[bool] = None
+    max_duration_minutes: Optional[int] = None
+    payment_details: Optional[str] = None    # Hebrew string, e.g. "₪5/שעה"
+    ai_enhanced: bool = False                # True when Claude filled in the extra fields

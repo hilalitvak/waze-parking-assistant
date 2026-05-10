@@ -59,6 +59,12 @@ def _street_rule_at(lat: float, lon: float, street_rules: List[Dict]) -> Optiona
     return None
 
 
+def get_street_rule(lat: float, lon: float) -> Optional[Dict]:
+    """Return the raw street-rule dict (with payment/side fields) for the given coords."""
+    street_rules = _load_json("mock_street_rules.json")
+    return _street_rule_at(lat, lon, street_rules)
+
+
 def get_geo_context(lat: float, lon: float) -> GeoContext:
     """
     Return GeoContext for the given coordinates.
