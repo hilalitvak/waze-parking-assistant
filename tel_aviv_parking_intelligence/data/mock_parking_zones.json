@@ -1,0 +1,42 @@
+[
+  {
+    "zone_id": "1",
+    "name": "אזור 1 – מרכז תל אביב",
+    "description": "דיזנגוף, בן יהודה, פרישמן, גורדון",
+    "center_lat": 32.0845,
+    "center_lon": 34.7714,
+    "radius_meters": 650
+  },
+  {
+    "zone_id": "2",
+    "name": "אזור 2 – לב תל אביב / רוטשילד",
+    "description": "רוטשילד, נחלת בנימין, אלנבי, מונטיפיורי",
+    "center_lat": 32.0655,
+    "center_lon": 34.7756,
+    "radius_meters": 600
+  },
+  {
+    "zone_id": "3",
+    "name": "אזור 3 – צפון תל אביב",
+    "description": "יהודה המכבי, ארלוזורוב, ז'בוטינסקי",
+    "center_lat": 32.0960,
+    "center_lon": 34.7820,
+    "radius_meters": 700
+  },
+  {
+    "zone_id": "4",
+    "name": "אזור 4 – נווה צדק / יפו צפונית",
+    "description": "שבזי, אחד העם, פנקס",
+    "center_lat": 32.0579,
+    "center_lon": 34.7601,
+    "radius_meters": 450
+  },
+  {
+    "zone_id": "5",
+    "name": "אזור 5 – פלורנטין",
+    "description": "סלמה, פלורנטין, מן",
+    "center_lat": 32.0540,
+    "center_lon": 34.7658,
+    "radius_meters": 500
+  }
+]
