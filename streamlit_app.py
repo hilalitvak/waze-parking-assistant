@@ -41,82 +41,24 @@ st.set_page_config(
 )
 
 # ── Harmonious calming palette ─────────────────────────────────────────────────
-# Soft teal-blue header, warm cream background, gentle greens for success
 
 st.markdown("""
 <style>
-/* Global page background — warm off-white */
-[data-testid="stAppViewContainer"] {
-    background-color: #f5f3ef;
-}
-/* Main content block */
-[data-testid="block-container"] {
-    background-color: #f5f3ef;
-}
-/* Sidebar */
-[data-testid="stSidebar"] {
-    background-color: #e8f4f0;
-}
-/* Tab labels */
-.stTabs [data-baseweb="tab"] {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #3d6b68;
-}
-.stTabs [aria-selected="true"] {
-    border-bottom: 3px solid #3d9e8c;
-    color: #1a4f4c;
-}
-/* RTL text blocks */
-.rtl {
-    direction: rtl;
-    text-align: right;
-    font-size: 1.05rem;
-    line-height: 1.7;
-    color: #2c3e50;
-}
-/* Result cards */
-.card-ok {
-    background: #d4edda;
-    border-left: 5px solid #28a745;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin: 8px 0;
-}
-.card-no {
-    background: #f8d7da;
-    border-left: 5px solid #c0392b;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin: 8px 0;
-}
-.card-warn {
-    background: #fff3cd;
-    border-left: 5px solid #f39c12;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin: 8px 0;
-}
-.card-info {
-    background: #d6eaf8;
-    border-left: 5px solid #2e86c1;
-    border-radius: 8px;
-    padding: 14px 18px;
-    margin: 8px 0;
-}
-/* Primary button */
+[data-testid="stAppViewContainer"] { background-color: #f5f3ef; }
+[data-testid="block-container"]    { background-color: #f5f3ef; }
+[data-testid="stSidebar"]          { background-color: #e8f4f0; }
+.stTabs [data-baseweb="tab"]       { font-size: 1.05rem; font-weight: 600; color: #3d6b68; }
+.stTabs [aria-selected="true"]     { border-bottom: 3px solid #3d9e8c; color: #1a4f4c; }
+.rtl { direction: rtl; text-align: right; font-size: 1.05rem; line-height: 1.7; color: #2c3e50; }
+.card-ok   { background:#d4edda; border-left:5px solid #28a745; border-radius:8px; padding:14px 18px; margin:8px 0; }
+.card-no   { background:#f8d7da; border-left:5px solid #c0392b; border-radius:8px; padding:14px 18px; margin:8px 0; }
+.card-warn { background:#fff3cd; border-left:5px solid #f39c12; border-radius:8px; padding:14px 18px; margin:8px 0; }
+.card-info { background:#d6eaf8; border-left:5px solid #2e86c1; border-radius:8px; padding:14px 18px; margin:8px 0; }
 .stButton > button[kind="primary"] {
-    background-color: #3d9e8c;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.05rem;
-    font-weight: 700;
-    padding: 0.6rem 1.4rem;
+    background-color:#3d9e8c; color:white; border:none;
+    border-radius:10px; font-size:1.05rem; font-weight:700; padding:0.6rem 1.4rem;
 }
-.stButton > button[kind="primary"]:hover {
-    background-color: #2e7a6a;
-}
+.stButton > button[kind="primary"]:hover { background-color:#2e7a6a; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -159,7 +101,6 @@ def _init_state():
         "lon": 34.7714,
         "last_map_click": None,
         "time_key": 0,
-        # Profile tab
         "user_zones": [],
         "vtype": "private",
         "has_disabled": False,
@@ -184,7 +125,7 @@ if "lat" in params and "lon" in params:
     except (ValueError, TypeError):
         pass
 
-# ── Sidebar — API key + mode indicator ────────────────────────────────────────
+# ── Sidebar ────────────────────────────────────────────────────────────────────
 
 with st.sidebar:
     st.markdown("### ⚙️ הגדרות")
@@ -192,7 +133,7 @@ with st.sidebar:
         "מפתח Anthropic API (אופציונלי)",
         type="password",
         placeholder="sk-ant-...",
-        help="הגדר מפתח API לקבלת תוצאות משופרות עם Claude AI. ללא מפתח — מנוע כללים בלבד.",
+        help="הגדר מפתח API לקבלת תוצאות משופרות עם Claude AI.",
     )
     if api_key_input.strip():
         os.environ["ANTHROPIC_API_KEY"] = api_key_input.strip()
@@ -206,15 +147,14 @@ with st.sidebar:
     st.divider()
     st.caption("⚠️ כלי זה מיועד לתמיכה בלבד. אין לסמוך עליו כייעוץ משפטי.")
 
-# ── Page header ────────────────────────────────────────────────────────────────
+# ── Header ─────────────────────────────────────────────────────────────────────
 
 st.markdown(
-    "<h1 style='text-align:center; color:#1a4f4c; margin-bottom:0'>🚗 חניה חכמה — תל אביב</h1>",
+    "<h1 style='text-align:center;color:#1a4f4c;margin-bottom:0'>🚗 חניה חכמה — תל אביב</h1>",
     unsafe_allow_html=True,
 )
 st.markdown(
-    "<p style='text-align:center; color:#5d7f7c; font-size:0.95rem'>"
-    "בדוק היכן וכיצד לחנות — בזמן אמת</p>",
+    "<p style='text-align:center;color:#5d7f7c;font-size:0.95rem'>בדוק היכן וכיצד לחנות — בזמן אמת</p>",
     unsafe_allow_html=True,
 )
 
@@ -224,9 +164,7 @@ st.markdown(
 
 tab_profile, tab_check = st.tabs(["👤 הפרופיל שלי", "🅿️ בדיקת חניה"])
 
-# ───────────────────────────────────────────────────────────────────────────────
-# TAB 1 – Profile
-# ───────────────────────────────────────────────────────────────────────────────
+# ── TAB 1 – Profile ────────────────────────────────────────────────────────────
 
 with tab_profile:
     st.markdown("<h3 style='color:#1a4f4c'>הפרופיל שלי</h3>", unsafe_allow_html=True)
@@ -253,12 +191,11 @@ with tab_profile:
 
     st.markdown("**הרשאות מיוחדות**")
     col_d, col_l, col_e = st.columns(3)
-    st.session_state.has_disabled = col_d.checkbox("♿ תו נכה", value=st.session_state.has_disabled)
+    st.session_state.has_disabled = col_d.checkbox("♿ תו נכה",             value=st.session_state.has_disabled)
     st.session_state.has_loading  = col_l.checkbox("📦 אישור פריקה/טעינה", value=st.session_state.has_loading)
-    st.session_state.is_ev        = col_e.checkbox("⚡ רכב חשמלי", value=st.session_state.is_ev)
+    st.session_state.is_ev        = col_e.checkbox("⚡ רכב חשמלי",          value=st.session_state.is_ev)
 
     st.divider()
-    # Summary card
     zones_str = ", ".join(st.session_state.user_zones) if st.session_state.user_zones else "אין"
     perms = []
     if st.session_state.has_disabled: perms.append("תו נכה")
@@ -272,58 +209,45 @@ with tab_profile:
     🔑 הרשאות: {perms_str}
     </div>
     """, unsafe_allow_html=True)
-
     st.caption("עבור ללשונית '🅿️ בדיקת חניה' כדי לבדוק חניה לפי מיקום.")
 
-# ───────────────────────────────────────────────────────────────────────────────
-# TAB 2 – Parking check
-# ───────────────────────────────────────────────────────────────────────────────
+# ── TAB 2 – Parking check ──────────────────────────────────────────────────────
 
 with tab_check:
     st.markdown("<h3 style='color:#1a4f4c'>בדיקת חניה</h3>", unsafe_allow_html=True)
 
-    # ── Location ────────────────────────────────────────────────────────────
-
+    # Location
     st.markdown("#### 📍 מיקום")
 
-    # GPS button
     components.html("""
     <style>
-      .gps-btn {
-        background: #3d9e8c; color: white; border: none;
-        padding: 9px 20px; border-radius: 8px; cursor: pointer;
-        font-size: 14px; font-family: sans-serif; font-weight: 600;
-      }
-      .gps-btn:hover { background: #2e7a6a; }
-      .gps-btn:disabled { background: #aac8c3; cursor: default; }
+      .gps-btn { background:#3d9e8c;color:white;border:none;padding:9px 20px;
+                 border-radius:8px;cursor:pointer;font-size:14px;font-family:sans-serif;font-weight:600; }
+      .gps-btn:hover { background:#2e7a6a; }
+      .gps-btn:disabled { background:#aac8c3;cursor:default; }
     </style>
     <button class="gps-btn" id="btn" onclick="
-      var btn = document.getElementById('btn');
-      btn.disabled = true; btn.textContent = '⏳ מאתר מיקום...';
+      var btn=document.getElementById('btn');
+      btn.disabled=true; btn.textContent='⏳ מאתר מיקום...';
       navigator.geolocation.getCurrentPosition(
-        function(pos) {
-          var url = new URL(window.parent.location.href);
-          url.searchParams.set('lat', pos.coords.latitude.toFixed(6));
-          url.searchParams.set('lon', pos.coords.longitude.toFixed(6));
-          window.parent.location.href = url.toString();
+        function(pos){
+          var url=new URL(window.parent.location.href);
+          url.searchParams.set('lat',pos.coords.latitude.toFixed(6));
+          url.searchParams.set('lon',pos.coords.longitude.toFixed(6));
+          window.parent.location.href=url.toString();
         },
-        function(err) {
-          alert('לא ניתן לאתר מיקום: ' + err.message);
-          btn.disabled = false; btn.textContent = '📍 השתמש במיקומי הנוכחי';
+        function(err){
+          alert('לא ניתן לאתר מיקום: '+err.message);
+          btn.disabled=false; btn.textContent='📍 השתמש במיקומי הנוכחי';
         },
-        {enableHighAccuracy: true, timeout: 10000}
+        {enableHighAccuracy:true,timeout:10000}
       );
     ">📍 השתמש במיקומי הנוכחי</button>
     """, height=55)
 
-    # Address search
     addr_col, go_col = st.columns([5, 1])
     with addr_col:
-        address_input = st.text_input(
-            "חיפוש כתובת",
-            placeholder="לדוגמה: דיזנגוף 50 תל אביב",
-            label_visibility="collapsed",
-        )
+        address_input = st.text_input("חיפוש", placeholder="לדוגמה: דיזנגוף 50 תל אביב", label_visibility="collapsed")
     with go_col:
         search_clicked = st.button("🔍 חפש", use_container_width=True)
 
@@ -337,76 +261,47 @@ with tab_check:
         else:
             st.error("לא נמצאה כתובת — נסה לנסח אחרת")
 
-    # Folium map
     lat = st.session_state.lat
     lon = st.session_state.lon
 
     m = folium.Map(location=[lat, lon], zoom_start=15, tiles="CartoDB positron")
-
     for zone in ZONES:
         color = ZONE_COLORS.get(zone["zone_id"], "gray")
         flag  = ZONE_FLAGS.get(zone["zone_id"], "⚪")
         folium.Circle(
             location=[zone["center_lat"], zone["center_lon"]],
             radius=zone["radius_meters"],
-            color=color,
-            fill=True,
-            fill_opacity=0.12,
-            weight=2,
+            color=color, fill=True, fill_opacity=0.12, weight=2,
             tooltip=f"{flag} {zone['name']}",
-            popup=folium.Popup(
-                f"<b>{flag} {zone['name']}</b><br><small>{zone['description']}</small>",
-                max_width=220,
-            ),
+            popup=folium.Popup(f"<b>{flag} {zone['name']}</b><br><small>{zone['description']}</small>", max_width=220),
         ).add_to(m)
-
     folium.Marker(
         location=[lat, lon],
         icon=folium.Icon(color="red", icon="car", prefix="fa"),
         tooltip="מיקום נבחר — לחץ על המפה לשינוי",
     ).add_to(m)
 
-    map_data = st_folium(
-        m,
-        height=350,
-        width="100%",
-        returned_objects=["last_clicked"],
-        key="main_map",
-    )
+    map_data = st_folium(m, height=350, width="100%", returned_objects=["last_clicked"], key="main_map")
 
     if map_data and map_data.get("last_clicked"):
-        clicked = (
-            round(map_data["last_clicked"]["lat"], 6),
-            round(map_data["last_clicked"]["lng"], 6),
-        )
+        clicked = (round(map_data["last_clicked"]["lat"], 6), round(map_data["last_clicked"]["lng"], 6))
         if clicked != st.session_state.last_map_click:
             st.session_state.last_map_click = clicked
-            st.session_state.lat = clicked[0]
-            st.session_state.lon = clicked[1]
+            st.session_state.lat, st.session_state.lon = clicked
             st.rerun()
 
-    st.caption(
-        f"📌 {lat:.5f}, {lon:.5f}  |  "
-        + "  ".join(f"{ZONE_FLAGS[z]} אזור {z}" for z in ZONE_FLAGS)
-    )
+    st.caption(f"📌 {lat:.5f}, {lon:.5f}  |  " + "  ".join(f"{ZONE_FLAGS[z]} אזור {z}" for z in ZONE_FLAGS))
 
     # Auto-detect street
     geo_ctx = get_geo_context(lat, lon)
-
     if not geo_ctx.street_name:
         nom_data = _cached_reverse_geocode(round(lat, 4), round(lon, 4))
         if nom_data:
             addr_data = nom_data.get("address", {})
-            street_he = (
-                addr_data.get("road")
-                or addr_data.get("pedestrian")
-                or addr_data.get("neighbourhood")
-                or addr_data.get("suburb")
-            )
+            street_he = addr_data.get("road") or addr_data.get("pedestrian") or addr_data.get("neighbourhood")
             if street_he:
                 geo_ctx = GeoContext(
-                    lat=lat, lon=lon,
-                    street_name=street_he,
+                    lat=lat, lon=lon, street_name=street_he,
                     parking_zone=geo_ctx.parking_zone,
                     municipal_restrictions=geo_ctx.municipal_restrictions,
                     source="nominatim",
@@ -414,19 +309,14 @@ with tab_check:
 
     if geo_ctx.street_name:
         zone_badge = f"אזור {geo_ctx.parking_zone}" if geo_ctx.parking_zone else "אזור לא מזוהה"
-        st.markdown(
-            f'<div class="card-info rtl">📍 <b>{geo_ctx.street_name}</b> — {zone_badge}</div>',
-            unsafe_allow_html=True,
-        )
+        st.markdown(f'<div class="card-info rtl">📍 <b>{geo_ctx.street_name}</b> — {zone_badge}</div>', unsafe_allow_html=True)
     else:
         st.warning("הרחוב לא זוהה. נסה לחפש כתובת או לחץ על מיקום ידוע במפה.")
 
-    # ── Date & Time ──────────────────────────────────────────────────────────
-
+    # Date & Time
     st.markdown("#### 🕐 תאריך ושעה")
     now = datetime.now()
     col_date, col_time, col_now = st.columns([2, 2, 1])
-
     with col_date:
         check_date = st.date_input("תאריך", value=now.date(), key=f"date_{st.session_state.time_key}")
     with col_time:
@@ -436,14 +326,11 @@ with tab_check:
         if st.button("עכשיו ⏱️"):
             st.session_state.time_key += 1
             st.rerun()
-
     current_dt = datetime.combine(check_date, check_time)
 
-    # ── Parking sign (optional) ───────────────────────────────────────────────
-
+    # Parking sign (optional)
     auto_rules = geo_ctx.municipal_restrictions or ""
-
-    with st.expander("🪧 כלל חניה (אופציונלי)", expanded=bool(not auto_rules)):
+    with st.expander("🪧 כלל חניה (אופציונלי)", expanded=not bool(auto_rules)):
         if auto_rules:
             st.success("✅ כללי חניה זוהו אוטומטית לפי מיקומך")
             sign_text = st.text_area("ערוך ידנית אם צריך", value=auto_rules, height=70, key="sign_auto")
@@ -451,20 +338,15 @@ with tab_check:
             sample_choice = st.selectbox("בחר שלט לדוגמה", SAMPLE_LABELS)
             default_text  = SAMPLE_MAP.get(sample_choice, "") if sample_choice != SAMPLE_LABELS[0] else ""
             sign_text = st.text_area(
-                "הדבק טקסט שלט ידנית (עברית)",
-                value=default_text,
-                height=80,
-                placeholder="לדוגמה: החניה מותרת לכולם עד השעה 17:00",
-                key="sign_manual",
+                "הדבק טקסט שלט ידנית (עברית)", value=default_text, height=80,
+                placeholder="לדוגמה: החניה מותרת לכולם עד השעה 17:00", key="sign_manual",
             )
 
-    # ── Check button ─────────────────────────────────────────────────────────
-
+    # Check button
     st.divider()
     run = st.button("✅ בדוק אם מותר לחנות כאן", type="primary", use_container_width=True)
 
     if run:
-        # Build profile objects from session state
         user_profile = UserProfile(
             user_id="streamlit_user",
             full_name=st.session_state.user_name or None,
@@ -481,24 +363,18 @@ with tab_check:
         )
 
         parsed_sign = parse_sign_text(sign_text) if sign_text.strip() else None
-        request = ParkingRequest(
-            lat=lat, lon=lon,
-            current_datetime=current_dt,
-            user_profile=user_profile,
-            vehicle_profile=vehicle_profile,
-        )
+        request = ParkingRequest(lat=lat, lon=lon, current_datetime=current_dt,
+                                 user_profile=user_profile, vehicle_profile=vehicle_profile)
 
         with st.spinner("🤖 מחשב…"):
-            deterministic: ParkingDecision = engine.decide(request, geo_ctx, parsed_sign)
-            street_rule = get_street_rule(lat, lon)
-            decision = enhance_with_ai(request, geo_ctx, deterministic, parsed_sign, street_rule)
+            deterministic = engine.decide(request, geo_ctx, parsed_sign)
+            street_rule   = get_street_rule(lat, lon)
+            decision      = enhance_with_ai(request, geo_ctx, deterministic, parsed_sign, street_rule)
 
-        # ── Result display ────────────────────────────────────────────────────
-
+        # Result
         st.divider()
         st.markdown("<h3 style='color:#1a4f4c'>📋 תוצאה</h3>", unsafe_allow_html=True)
 
-        # Main verdict
         if decision.can_park is True:
             st.markdown('<div class="card-ok rtl">✅ <b>מותר לחנות</b></div>', unsafe_allow_html=True)
         elif decision.can_park is False:
@@ -506,34 +382,26 @@ with tab_check:
         else:
             st.markdown('<div class="card-warn rtl">⚠️ <b>לא ניתן לקבוע בוודאות</b></div>', unsafe_allow_html=True)
 
-        # Explanation
         st.markdown(f'<div class="rtl" style="margin-top:10px">{decision.explanation_he}</div>', unsafe_allow_html=True)
 
-        # AI-enriched detail cards
         details_parts = []
         if decision.side:
             side_labels = {"right": "ימין ←", "left": "→ שמאל", "both": "שני הצדדים ↔"}
             details_parts.append(f"🚗 <b>צד חניה:</b> {side_labels.get(decision.side, decision.side)}")
         if decision.payment_required is True:
-            pay_txt = decision.payment_details or "נדרש תשלום"
-            details_parts.append(f"💳 <b>תשלום:</b> {pay_txt}")
+            details_parts.append(f"💳 <b>תשלום:</b> {decision.payment_details or 'נדרש תשלום'}")
         elif decision.payment_required is False:
             details_parts.append("💳 <b>תשלום:</b> לא נדרש (חינם)")
         if decision.max_duration_minutes:
-            hours = decision.max_duration_minutes // 60
-            mins  = decision.max_duration_minutes % 60
-            dur   = f"{hours} שעות {mins} דקות" if hours else f"{mins} דקות"
+            h, m = divmod(decision.max_duration_minutes, 60)
+            dur = f"{h} שעות {m} דקות" if h else f"{m} דקות"
             details_parts.append(f"⏱️ <b>מקסימום:</b> {dur}")
         if decision.remaining_time:
             details_parts.append(f"⌛ <b>זמן שנותר:</b> {decision.remaining_time}")
 
         if details_parts:
-            st.markdown(
-                '<div class="card-info rtl">' + "<br>".join(details_parts) + "</div>",
-                unsafe_allow_html=True,
-            )
+            st.markdown('<div class="card-info rtl">' + "<br>".join(details_parts) + "</div>", unsafe_allow_html=True)
 
-        # Confidence + mode badge
         conf_color = {"high": "#27ae60", "medium": "#e67e22", "low": "#c0392b"}.get(decision.confidence, "#7f8c8d")
         mode_badge = "🤖 Claude AI" if decision.ai_enhanced else "⚙️ מנוע כללים"
         st.markdown(
@@ -548,7 +416,6 @@ with tab_check:
             for w in decision.warnings:
                 st.markdown(f'<div class="rtl">• {w}</div>', unsafe_allow_html=True)
 
-        # Debug expanders
         st.divider()
         with st.expander("🔍 פרטים טכניים"):
             col_a, col_b = st.columns(2)
